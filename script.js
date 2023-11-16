@@ -28,7 +28,7 @@ function gettingJSON(){
         loadWeatherInfo(data);
     })
  } catch (error) {
-    alert(erro);
+    alert(error);
  }
 
  function loadWeatherInfo(data){
@@ -37,3 +37,4 @@ function gettingJSON(){
     img.src = `http://openweathermap.org/img/wn/S{data.weather[0].icon}@2x.pnj`;
     content.style.display = "flex"
  }
+
