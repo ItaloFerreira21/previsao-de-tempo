@@ -1,40 +1,26 @@
-const input = document.querySelector("input");
-const button = document.querySelector("button")
-const img = document.querySelector("img")
 
-const cidade = document.querySelector("#cidade")
-const grau = document.querySelector("#grau")
 
-const content = document.querySelector(".content")
+const chave = "c57844ed9ac72e73d80c3ff871e73225"
 
-button.addEventListener("click", () => {
-    if (!input.value) return;
-    getWeatherDate();
-} );
 
-function gettingJSON(){
-    document.write("jquery loaded");
-    $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=London&APPID=c57844ed9ac72e73d80c3ff871e73225",function(json){
-        document.write(JSON.stringify(json));
-    });
+function colocarDadosNaTela (dados){
+    console.log(dados)
+    document.querySelector(".cidade").innerHTML = "Tempo em " + dados.name
+    document.querySelector(".temp").innerHTML = Math.floor(dados.main.temp) +"°C"
+    document.querySelector(".previsao").innerHTML = dados.weather[0].description
+    document.querySelector(".umidade").innerHTML =  dados.main.humidity + "%"
+    document.querySelector(".img-previsao").src = `https://openweathermap.org/img/wn/${dados.weather[0].icon}.png`
 }
- try{
-    await fetch(getJSON)
-    .then((res)=> res.JSON())
-    .then((data)=>{
-        if(data?.cod && data.cod === 404){
-            return alert("cidade não encontrada.");
-        }
-        loadWeatherInfo(data);
-    })
- } catch (error) {
-    alert(error);
- }
 
- function loadWeatherInfo(data){
-    cidade.innerHTML = `S{data.name}, S{data.sys.country}`;
-    grau.innerHTML = `temperatura: S{Math.floor(data.main,temp)}°c`;
-    img.src = `http://openweathermap.org/img/wn/S{data.weather[0].icon}@2x.pnj`;
-    content.style.display = "flex"
- }
+async function buscarCidade(cidade){
+    const dados = await fetch (`https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${chave}&lang=pt_br&units=metric`).then( resposta => resposta.json())
 
+    colocarDadosNaTela(dados)
+   
+}
+
+
+function CliqueiNoBotao(){
+    const cidade = document.querySelector(".input-cidade").value
+    buscarCidade(cidade)
+}
