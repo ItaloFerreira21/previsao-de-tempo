@@ -121,3 +121,14 @@ h2 {
     margin-top: 20px;
 
 }
+
+
+
+
+@media screen and (min-width: 768px) and (max-width: 992px){
+    .maior{
+        width: 80vw;
+        height: 300px;
+    }
+}
+    
